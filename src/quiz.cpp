@@ -24,7 +24,7 @@ vector<QuestionType> Quiz::start_quiz() {
     }
 
     averages[EMPATHY] /= counts[EMPATHY];
-    averages[COOPORATION] /= counts[COOPORATION];
+    averages[COOPERATION] /= counts[COOPERATION];
     averages[COMMUNICATION] /= counts[COMMUNICATION];
     averages[LISTENING] /= counts[LISTENING];
     averages[NONVERBAL] /= counts[NONVERBAL];

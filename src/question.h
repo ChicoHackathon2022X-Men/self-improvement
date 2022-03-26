@@ -5,7 +5,7 @@
 
 enum QuestionType {
     EMPATHY = 1,
-    COOPORATION = 2,
+    COOPERATION = 2,
     COMMUNICATION = 3,
     LISTENING = 4,
     NONVERBAL = 5

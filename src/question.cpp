@@ -8,7 +8,7 @@ string to_string(QuestionType type) {
   switch (type) {
   case EMPATHY:
     return "empathy";
-  case COOPORATION:
+  case COOPERATION:
     return "cooporation";
   case COMMUNICATION:
     return "communication";
