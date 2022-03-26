@@ -68,13 +68,13 @@ bool runTraining(vector<QuestionType> order){
 
 
         if(questionTypeLevel.getLevelProgress() != 5) {
-					cout<<"You're on level "<< to_string(questionType)<<endl;
+            cout<<"You are now working on the skill of "<< to_string(questionType)<< ".\n";
             questionTypeLevel.askTasks();
 
             int progress = questionTypeLevel.getLevelProgress();
             if (progress == 5) {
                 cout << "Congragulations you just mastered the skill of " << to_string(questionType) << "!!!" << endl;
-								return true;
+                return true;
             } else {
                 cout << "You still have " << 5 - progress << " tasks left." << endl;
             }
@@ -147,17 +147,14 @@ bool finished(vector<QuestionType> order){
 }
 
 int main(){
+    auto order = getOrder();
 
-	auto order = getOrder();
-
-	if(finished(order)){
-		cout<<"Congradulations you have finished the program!"<<endl;
+    if(finished(order)){
+        cout<<"Congradulations you have finished the program!"<<endl;
 	}else{
-		while(runTraining(order));
-		if(finished(order)){
-			cout<<"Congradulations you have finished the program!"<<endl;
-		}
-	}
-
-
+        while(runTraining(order));
+        if(finished(order)){
+            cout<<"Congradulations you have finished the program!"<<endl;
+        }
+    }
 }
