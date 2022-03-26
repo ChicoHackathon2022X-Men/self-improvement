@@ -123,15 +123,15 @@ int Level::getPriority() {
 }
 
 void Level::askTasks() {
-  char answer;
+  string answer;
 
   std::cout << "Have you completed the following tasks? Type Y for yes or N for no." << std::endl;
   for (int i = 0; i < tasks.size(); i++) {
     if (!tasks[i].completed) {
-      while (answer != 'Y' && answer != 'N') {
+      while (answer != "Y" && answer != "N") {
         std::cout << " - " << tasks[i].objective << " : ";
         std::cin >> answer;
-        tasks[i].completed = (answer == 'Y') ? 1 : 0;
+        tasks[i].completed = (answer == "Y") ? 1 : 0;
       }
       answer = 'J';
     }

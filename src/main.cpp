@@ -58,7 +58,7 @@ void makeQuestions(Quiz &quizObj){
 	quizObj.insert_question("Do you take care of your appearance?", NONVERBAL);
 }
 
-void runTraining(vector<QuestionType> order){
+bool runTraining(vector<QuestionType> order){
     //at each index, show tasks
     
 	for(auto questionType : order){
@@ -71,12 +71,14 @@ void runTraining(vector<QuestionType> order){
             int progress = questionTypeLevel.getLevelProgress();
             if (progress == 5) {
                 cout << "Congragulations you just mastered the skill of " << to_string(questionType) << "!!!" << endl;
+				return true;
             } else {
                 cout << "You still have " << 5 - progress << " tasks left." << endl;
             }
-            break;
+			break;
         }
     }
+	return false;
 }
 
 vector<QuestionType> getOrder() {
@@ -131,8 +133,9 @@ vector<QuestionType> getOrder() {
 }
 
 int main(){
+	
 	auto order = getOrder();
 
 	//access quizObj vector
-	runTraining(order);
+	while(runTraining(order));
 }
