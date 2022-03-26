@@ -6,25 +6,35 @@
 
 using namespace std;
 
-void Level::getTasks() {
-  ifstream inputTaskFile("tasks");
-
-  string taskStr;
-  struct task task;
-  
+int get_offset(string trait) {
   int offset = 0;
 
   // get file offset
   if (trait == "empathy")
-    offset = 0;
+    offset = 1;
   if (trait == "cooperation")
-    offset = 5;
+    offset = 6;
   if (trait == "communication")
     offset = 10;
   if (trait == "listening")
     offset = 15;
   if (trait == "nonverbal")
     offset = 20;
+  
+  return offset;
+}
+
+Level::~Level() {
+  saveTasks();
+}
+
+void Level::getTasks() {
+  ifstream inputTaskFile("tasks");
+
+  string taskStr;
+  struct task task;
+  
+  int offset = get_offset(trait);
 
   // skip lines based on the current task
   for (int i = 0; i < offset; i++)
@@ -47,16 +57,7 @@ void Level::saveTasks() {
   int offset = 0;
   
   // get file offset
-  if (trait == "empathy")
-    offset = 0;
-  if (trait == "cooperation")
-    offset = 5;
-  if (trait == "communication")
-    offset = 10;
-  if (trait == "listening")
-    offset = 15;
-  if (trait == "nonverbal")
-    offset = 20;
+  int offset = get_offset(trait);
 
   ostringstream taskStream;
   ifstream inputTaskFile("tasks");
@@ -65,6 +66,7 @@ void Level::saveTasks() {
   inputTaskFile.close(); 
 
   string taskStr = taskStream.str();
+  taskStr[0] = '1';
 
   int i = 0;
   int count = 0;
@@ -124,17 +126,11 @@ int Level::getPriority() {
 }
 
 void Level::askTasks() {
-  if (started == 0) {
-    std::cout << "Tasks to be completed to improve " << trait << std::endl;
-    for (int i = 0; i < tasks.size(); i++) {
-      std::cout << tasks[i].objective << std::endl;
-    }
-  }
-  else {
-    char answer;
+  char answer;
 
-    std::cout << "Have you completed the following tasks? Type Y for yes or N for no." << std::endl;
-    for (int i = 0; i < tasks.size(); i++) {
+  std::cout << "Have you completed the following tasks? Type Y for yes or N for no." << std::endl;
+  for (int i = 0; i < tasks.size(); i++) {
+    if (!tasks[i].completed) {
       std::cout << tasks[i].objective << std::endl;
       std::cin >> answer;
       tasks[i].completed = (answer == 'Y') ? 1 : 0;

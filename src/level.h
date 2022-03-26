@@ -33,6 +33,8 @@ class Level
     Level(std::string trait, int priority, bool started)
       : trait(trait), priority(priority), started(started) {}
 
+    ~Level();
+
     // Setters
     void getTasks(); // read tasks from file
     void saveTasks(); // save tasks to file

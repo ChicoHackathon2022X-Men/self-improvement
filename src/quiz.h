@@ -10,6 +10,7 @@ class Quiz {
     
     public:
         Quiz();
+        void scramble();
         void insert_question(std::string question, QuestionType category);
         std::vector<QuestionType> start_quiz();
 };
