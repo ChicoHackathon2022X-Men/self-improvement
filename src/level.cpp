@@ -3,6 +3,7 @@
 #include <sstream>
 
 #include "level.h"
+#include "question.h"
 
 using namespace std;
 
@@ -15,15 +16,15 @@ void Level::getTasks() {
   int offset = 0;
 
   // get file offset
-  if (trait == "empathy")
+  if (trait == EMPATHY)
     offset = 0;
-  if (trait == "cooperation")
+  if (trait == COOPERATION)
     offset = 5;
-  if (trait == "communication")
+  if (trait == COMMUNICATION)
     offset = 10;
-  if (trait == "listening")
+  if (trait == LISTENING)
     offset = 15;
-  if (trait == "nonverbal")
+  if (trait == NONVERBAL)
     offset = 20;
 
   // skip lines based on the current task
@@ -47,15 +48,15 @@ void Level::saveTasks() {
   int offset = 0;
   
   // get file offset
-  if (trait == "empathy")
+  if (trait == EMPATHY)
     offset = 0;
-  if (trait == "cooperation")
+  if (trait == COOPERATION)
     offset = 5;
-  if (trait == "communication")
+  if (trait == COMMUNICATION)
     offset = 10;
-  if (trait == "listening")
+  if (trait == LISTENING)
     offset = 15;
-  if (trait == "nonverbal")
+  if (trait == NONVERBAL)
     offset = 20;
 
   ostringstream taskStream;
@@ -115,7 +116,7 @@ int Level::getLevelProgress() {
   return prog/tasks.size();
 }
 
-std::string Level::getTrait() {
+QuestionType Level::getTrait() {
   return trait;
 }
 

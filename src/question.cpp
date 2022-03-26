@@ -9,7 +9,7 @@ string to_string(QuestionType type) {
   case EMPATHY:
     return "empathy";
   case COOPERATION:
-    return "cooporation";
+    return "cooperation";
   case COMMUNICATION:
     return "communication";
   case LISTENING:

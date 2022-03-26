@@ -10,7 +10,7 @@ main.o: level.h quiz.h main.cpp
 quiz.o: quiz.h question.h quiz.cpp
 	g++ -Wall -pedantic -g -std=c++20 -c quiz.cpp
 
-level.o: level.h level.cpp
+level.o: level.h question.h level.cpp
 	g++ -Wall -pedantic -g -std=c++20 -c level.cpp
 
 clean:
