@@ -1,5 +1,5 @@
-main: main.o question.o
-	g++ -Wall -pedantic -g -o main main.o question.o
+main: main.o question.o quiz.o level.o
+	g++ -Wall -pedantic -g -o main main.o question.o quiz.o level.o
 
 question.o: question.h question.cpp
 	g++ -Wall -pedantic -g -std=c++20 -c question.cpp
