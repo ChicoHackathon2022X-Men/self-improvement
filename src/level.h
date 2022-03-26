@@ -34,7 +34,8 @@ class Level
       : trait(trait), priority(priority), started(started) {}
 
     // Setters
-    void setTasks(); // initialize tasks vector
+    void getTasks(); // read tasks from file
+    void saveTasks(); // save tasks to file
     void setStarted(); // determine if user started or not
     void askTasks(); // to be invoked in main
     // Getters
