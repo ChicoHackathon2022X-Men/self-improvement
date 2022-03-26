@@ -59,45 +59,28 @@ void makeQuestions(Quiz &quizObj){
 }
 
 void runTraining(vector<QuestionType> order){
-	//at each index, show tasks
+    //at each index, show tasks
+    
 	for(auto questionType : order){
-        if(questionType == EMPATHY) {
+        Level questionTypeLevel(questionType);
+        questionTypeLevel.getTasks();
 
-				Level empathyLvl(EMPATHY);
-				empathyLvl.getTasks();
-				empathyLvl.askTasks();        }
-        else if(questionType == COOPERATION)
-        {
-				Level coopLvl;
-				coopLvl.getTasks();
-				coopLvl.askTasks();
+        if(questionTypeLevel.getLevelProgress() != 5) {
+            questionTypeLevel.askTasks();
 
+            int progress = questionTypeLevel.getLevelProgress();
+            if (progress == 5) {
+                cout << "Congragulations you just mastered the skill of " << to_string(questionType) << "!!!" << endl;
+            } else {
+                cout << "You still have " << 5 - progress << " tasks left." << endl;
+            }
+            break;
         }
-        else if(questionType == COMMUNICATION)
-        {
-				Level comLvl;
-				comLvl.getTasks();
-				comLvl.askTasks();
-
-        }
-        else if(questionType == LISTENING)
-        {
-				Level listenLvl;
-				listenLvl.getTasks();
-				listenLvl.askTasks();
-
-        }
-        else if(questionType == NONVERBAL)
-        {
-				Level nonverbalLvl;
-                nonverbalLvl.getTasks();
-				nonverbalLvl.askTasks();
-
-        }
-	}
+    }
 }
 
-vector<QuestionType> getOrder(Quiz &quiz) {
+vector<QuestionType> getOrder() {
+    Quiz quiz;
     ifstream taskFile("tasks");
     string line;
     getline(taskFile, line);
@@ -106,6 +89,8 @@ vector<QuestionType> getOrder(Quiz &quiz) {
     vector<QuestionType> order;
 
     if (line[0] != '1') {
+        introduction();
+
         Quiz quizObj;
         makeQuestions(quizObj);
 
@@ -128,8 +113,8 @@ vector<QuestionType> getOrder(Quiz &quiz) {
     } else {
         ifstream taskFile("tasks");
 
-        getline( taskFile,line);
-        getline( taskFile,line);
+        getline(taskFile,line);
+        getline(taskFile,line);
 
         for (int i = 0; i < 5; i++) {
             // cout << line[i*2]-48 << endl;
@@ -146,11 +131,8 @@ vector<QuestionType> getOrder(Quiz &quiz) {
 }
 
 int main(){
-	introduction();
-	
-    Quiz quiz;
-	auto order = getOrder(quiz);
+	auto order = getOrder();
+
 	//access quizObj vector
 	runTraining(order);
-	
 }

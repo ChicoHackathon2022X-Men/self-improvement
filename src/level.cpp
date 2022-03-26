@@ -12,15 +12,15 @@ int get_offset(QuestionType trait) {
 
   // get file offset
   if (trait == EMPATHY)
-    offset = 1;
+    offset = 2;
   if (trait == COOPERATION)
-    offset = 6;
+    offset = 7;
   if (trait == COMMUNICATION)
-    offset = 11;
+    offset = 12;
   if (trait == LISTENING)
-    offset = 16;
+    offset = 17;
   if (trait == NONVERBAL)
-    offset = 21;
+    offset = 22;
   
   return offset;
 }
@@ -90,8 +90,6 @@ void Level::saveTasks() {
     }
   }
 
-  std::cout << taskStr << endl;
-
   ofstream outputTaskFile("tasks", std::ios::trunc);
   outputTaskFile << taskStr << std::flush;
   outputTaskFile.close();
@@ -113,7 +111,7 @@ int Level::getLevelProgress() {
     }
   }
 
-  return prog/tasks.size();
+  return prog;
 }
 
 QuestionType Level::getTrait() {
@@ -130,9 +128,12 @@ void Level::askTasks() {
   std::cout << "Have you completed the following tasks? Type Y for yes or N for no." << std::endl;
   for (int i = 0; i < tasks.size(); i++) {
     if (!tasks[i].completed) {
-      std::cout << tasks[i].objective << std::endl;
-      std::cin >> answer;
-      tasks[i].completed = (answer == 'Y') ? 1 : 0;
+      while (answer != 'Y' && answer != 'N') {
+        std::cout << " - " << tasks[i].objective << " : ";
+        std::cin >> answer;
+        tasks[i].completed = (answer == 'Y') ? 1 : 0;
+      }
+      answer = 'J';
     }
   }
 }

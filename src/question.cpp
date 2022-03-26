@@ -11,11 +11,11 @@ string to_string(QuestionType type) {
   case COOPERATION:
     return "cooperation";
   case COMMUNICATION:
-    return "communication";
+    return "verbal communication";
   case LISTENING:
     return "listening";
   case NONVERBAL:
-    return "nonverbal";
+    return "nonverbal communication";
   };
 }
 
