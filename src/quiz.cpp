@@ -1,5 +1,8 @@
 #include <map>
 #include <vector>
+#include <algorithm>
+#include <random>
+
 
 #include "question.h"
 #include "quiz.h"
@@ -12,9 +15,15 @@ void Quiz::insert_question(string question, QuestionType category) {
     this->questions.push_back(Question(question, category));
 }
 
+void Quiz::scramble() {
+    auto rng = std::default_random_engine {};
+    std::shuffle(std::begin(questions), std::end(questions), rng);
+}
+
 vector<QuestionType> Quiz::start_quiz() {
     map<QuestionType, double> averages;
     map<QuestionType, double> counts;
+
 
     for (auto question : questions) {
         auto type = question.get_type();
