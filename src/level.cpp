@@ -1,50 +1,99 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
 #include "level.h"
 
-void Level::setTasks() {
-  for (int i = 0; i < NUM_TASKS; i++) {
-    task t;
-    tasks.push_back(t);
+using namespace std;
+
+void Level::getTasks() {
+  ifstream inputTaskFile("tasks");
+
+  string taskStr;
+  struct task task;
+  
+  int offset = 0;
+
+  // get file offset
+  if (trait == "empathy")
+    offset = 0;
+  if (trait == "cooperation")
+    offset = 5;
+  if (trait == "communication")
+    offset = 10;
+  if (trait == "listening")
+    offset = 15;
+  if (trait == "nonverbal")
+    offset = 20;
+
+  // skip lines based on the current task
+  for (int i = 0; i < offset; i++)
+    getline(inputTaskFile, taskStr);
+  
+  for (int i = 0; i < 5; i++) {
+    getline(inputTaskFile, taskStr);
+
+    task.completed = taskStr[0] == '0' ? 0 : 1;
+    taskStr.erase(0, 1);
+
+    task.objective = string(taskStr);
+    tasks.push_back(task);
   }
 
-  if (trait == "empathy") {
-    tasks[0].objective = "Ask someone how they feel.";
-    tasks[1].objective = "Notice someone feeling anxious.";
-    tasks[2].objective = "Notice someone feeling annoyed.";
-    tasks[3].objective = "Encourage someone struggling.";
-    tasks[4].objective = "Stand up for someone.";
-  }
-  if (trait == "cooperation") {
+  inputTaskFile.close();
+}
 
-	tasks[5].objective = "Learn someone’s name";
-	tasks[6].objective = "Ask someone for their input";
-	tasks[7].objective = "Tell someone that they did a good job";
-	tasks[8].objective = "Ask someone to spend time with you";
-	tasks[9].objective = "Solve a problem with another person";
-  }
-  if (trait == "communication") {
+void Level::saveTasks() {
+  int offset = 0;
+  
+  // get file offset
+  if (trait == "empathy")
+    offset = 0;
+  if (trait == "cooperation")
+    offset = 5;
+  if (trait == "communication")
+    offset = 10;
+  if (trait == "listening")
+    offset = 15;
+  if (trait == "nonverbal")
+    offset = 20;
 
-	tasks[10].objective = "Tell a joke that makes someone smile";
-	tasks[11].objective = "Talk for 30 seconds without using filler words";
-	tasks[12].objective = "Send an email to teacher/boss/etc";
-	tasks[13].objective = "Read an information text";
-	tasks[14].objective = "Speak to a group of 5+";
-  }
-  if (trait == "listening") {
+  ostringstream taskStream;
+  ifstream inputTaskFile("tasks");
 
-	tasks[15].objective = "Let someone speak for 20 second without interrupting";
-	tasks[16].objective = "Maintain eye contact for 5 seconds";
-	tasks[17].objective = "Ask a question";
-	tasks[18].objective = "Nod while someone’s talking";
-	tasks[19].objective = "Understand what someone is explaining";
-  }
-  if (trait == "nonverbal") {
+  taskStream << inputTaskFile.rdbuf();
+  inputTaskFile.close(); 
 
-	tasks[20].objective = "Shake someone’s hand firmly";
-	tasks[21].objective = "Have a conversation with uncrossed arms";
-	tasks[22].objective = "Use your hands while explaining something";
-	tasks[23].objective = "Smile at a stranger";
-	tasks[24].objective = "Have a conversation standing ~3 feet away from someone";
+  string taskStr = taskStream.str();
+
+  int i = 0;
+  int count = 0;
+  while (count < offset) {
+    if (taskStr[i] == '\n') {
+      count++;
+    }
+    i++;
   }
+
+  for (auto task : tasks) {
+    if (taskStr[i] == '\n') {
+      i++;
+    }
+
+    // save objective status: ascii offset
+    taskStr[i] = task.completed + 48;
+
+    // go to next newline
+    while (taskStr[i] != '\n') {
+      i++;
+    }
+  }
+
+  std::cout << taskStr << endl;
+
+  ofstream outputTaskFile("tasks", std::ios::trunc);
+  outputTaskFile << taskStr << std::flush;
+  outputTaskFile.close();
 }
 
 void Level::setStarted() {
