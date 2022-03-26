@@ -55,8 +55,6 @@ void Level::getTasks() {
 }
 
 void Level::saveTasks() {
-  int offset = 0;
-  
   // get file offset
   int offset = get_offset(trait);
 

@@ -1,6 +1,8 @@
 using namespace std;
 #include <iostream>
 #include <vector>
+#include <sstream>
+#include <fstream>
 #include "level.h"
 #include "quiz.h"
 
@@ -95,13 +97,60 @@ void runTraining(vector<QuestionType> order){
 	}
 }
 
+vector<QuestionType> getOrder(Quiz &quiz) {
+    ifstream taskFile("tasks");
+    string line;
+    getline(taskFile, line);
+    taskFile.close();
+
+    vector<QuestionType> order;
+
+    if (line[0] != '1') {
+        Quiz quizObj;
+        makeQuestions(quizObj);
+
+        order = quizObj.start_quiz();
+
+        ostringstream taskStream;
+        ifstream inputTaskFile("tasks");
+
+        taskStream << inputTaskFile.rdbuf();
+        inputTaskFile.close(); 
+        string taskStr = taskStream.str();
+
+        for (int i = 0; i < 4; i ++) {
+            taskStr[i*2 + 2] = 48 + order[i];
+        }
+
+        ofstream outputTaskFile("tasks", std::ios::trunc);
+        outputTaskFile << taskStr << std::flush;
+        outputTaskFile.close();
+    } else {
+        ifstream taskFile("tasks");
+
+        getline( taskFile,line);
+        getline( taskFile,line);
+
+        for (int i = 0; i < 5; i++) {
+            // cout << line[i*2]-48 << endl;
+            QuestionType value = (QuestionType) (line[i*2] - 48);
+            order.push_back(value);
+        }
+
+        taskFile.close();
+
+        cout << "Welcome back!" << endl;
+    }
+
+    return order;
+}
+
 int main(){
 	introduction();
 	
-	Quiz quizObj;
-	makeQuestions(quizObj);
-	
+    Quiz quiz;
+	auto order = getOrder(quiz);
 	//access quizObj vector
-	runTraining(quizObj.start_quiz());
+	runTraining(order);
 	
 }
