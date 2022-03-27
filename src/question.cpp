@@ -25,7 +25,7 @@ Question::Question(string question, QuestionType qtype) {
 }
 
 double Question::prompt() {
-  cout << "\n\033[1m" << question << "\033[0m [" << to_string(qtype) << "]\n";
+  cout << "\n\033[1m" << question << "\033[0m\n";
 
   int value = 1;
   do {

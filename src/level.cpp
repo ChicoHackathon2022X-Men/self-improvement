@@ -138,4 +138,10 @@ void Level::askTasks() {
   }
 }
 
+// void Level::displayTasks() {
+//   std::cout << "Here are the tasks you need to work on next.\n";
 
+//   for (auto task : tasks) {
+//     std::cout << " - " << task.objective << "\n";
+//   }
+// }

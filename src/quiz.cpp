@@ -16,7 +16,8 @@ void Quiz::insert_question(string question, QuestionType category) {
 }
 
 void Quiz::scramble() {
-    auto rng = std::default_random_engine {};
+    auto rd = std::random_device {}; 
+    auto rng = std::default_random_engine { rd() };
     std::shuffle(std::begin(questions), std::end(questions), rng);
 }
 

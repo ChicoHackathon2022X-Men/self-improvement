@@ -9,11 +9,18 @@ using namespace std;
 void introduction(){
 	string name;
 
-	cout<<"Hello!"<<endl;
-	cout<<"Today we will be developing your workplace skills, including:"<<endl;
-	cout<<"empathy, cooperation, verbal & written communication, listening, and nonverbal communication."<<endl;
-	cout<<"When ready enter your name: ";
-	cin>>name;
+	cout << "Welcome to Soft & Hard." << endl << endl;
+	cout << "Today we will be developing your workplace skills, including:" << endl;
+	cout << " - empathy" << endl <<
+            " - cooperation" << endl <<
+            " - verbal and written communication" << endl <<
+            " - listening" << endl <<
+            " - nonverbal communication" << endl << endl;
+    
+
+    cout << "To asses what skills you need to improve, we will be conducting a short survey." << endl;
+	// cout << "When ready enter your name: ";
+	// cin >> name;
 }
 
 void makeQuestions(Quiz &quizObj){
@@ -73,19 +80,18 @@ bool runTraining(vector<QuestionType> order){
 
             int progress = questionTypeLevel.getLevelProgress();
             if (progress == 5) {
-                cout << "Congragulations you just mastered the skill of " << to_string(questionType) << "!!!" << endl;
+                cout << "\nCongragulations you just mastered the skill of " << to_string(questionType) << "!!!\n\n";
                 return true;
             } else {
                 cout << "You still have " << 5 - progress << " tasks left." << endl;
             }
-			break;
+            break;
         }
     }
 	return false;
 }
 
 vector<QuestionType> getOrder() {
-    Quiz quiz;
     ifstream taskFile("tasks");
     string line;
     getline(taskFile, line);
@@ -98,6 +104,7 @@ vector<QuestionType> getOrder() {
 
         Quiz quizObj;
         makeQuestions(quizObj);
+        quizObj.scramble();
 
         order = quizObj.start_quiz();
 
